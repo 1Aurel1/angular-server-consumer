@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import {Post} from "../shared/model/Post";
-import {HttpClient} from "@angular/common/http";
+import {Post} from '../model/Post';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {catchError} from 'rxjs/operators';
+import {throwError} from 'rxjs';
+import {NotFoundError} from '../errors/not-found-error';
+import {AppError} from '../errors/app-error';
+import {BadInput} from '../errors/bad-input';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +32,8 @@ export class PostService {
   }
 
   deletePost(post: Post) {
-    return this.http.delete(this.url + '/' + post.id);
+
+      return this.http.delete(this.url + '/' + post.id);
   }
+
 }

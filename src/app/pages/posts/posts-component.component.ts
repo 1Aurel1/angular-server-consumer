@@ -1,16 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Post} from '../../shared/model/Post';
-import {HttpClient} from '@angular/common/http';
-import {PostService} from "../../service/post.service";
+import {PostService} from '../../shared/service/post.service';
 
 @Component({
   selector: 'app-posts-component',
-  templateUrl: './posts-component.component.html',
-  styleUrls: ['./posts-component.component.css']
+  templateUrl: '../../components/posts-component/posts-component.component.html',
+  styleUrls: ['../../components/posts-component/posts-component.component.css']
 })
 export class PostsComponentComponent implements OnInit {
-
-  private post: Post;
   posts: Post[];
 
   constructor(private service: PostService) {}
@@ -27,21 +24,24 @@ export class PostsComponentComponent implements OnInit {
       .subscribe(
       value => {
         this.posts.splice(0, 0, value);
-      });
+      }
+    );
   }
 
   updatePost(post: Post) {
       this.service.updatePost(post)
-      .subscribe(value => console.log(value));
+      .subscribe(
+        value => console.log(value)
+      );
   }
 
   deletePost(post: Post) {
       this.service.deletePost(post)
       .subscribe(
-      value => {
-        const index = this.posts.indexOf(post);
-        this.posts.splice(index, 1);
-      }
+        () => {
+          const index = this.posts.indexOf(post);
+          this.posts.splice(index, 1);
+        }
     );
   }
 }
